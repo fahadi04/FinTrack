@@ -15,8 +15,8 @@ FinTrack is a modern and easy-to-use money management application that helps use
 ## 🛠 Tech Stack
 
 - Backend: Spring Boot
-- Database: PostgreSQL
-- Frontend: React / Angular (planned)
+- Database: PostgreSQL/MySQL
+- Frontend: React 
 - Authentication: JWT
 - API Documentation: Swagger
 
