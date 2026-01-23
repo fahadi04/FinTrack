@@ -23,7 +23,6 @@ public class EmailService {
             message.setTo(to);
             message.setText(body);
             javaMailSender.send(message);
-
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
