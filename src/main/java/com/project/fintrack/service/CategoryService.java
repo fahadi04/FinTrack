@@ -16,7 +16,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     //save category
-    public CategoryDTO saveCategory( CategoryDTO categoryDTO) {
+    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
         ProfileModal profileModal = profileService.getCurrentProfile();
 
         if (categoryRepository.existsByNameAndProfileId(categoryDTO.getName(), profileModal.getId())) {
@@ -47,6 +47,7 @@ public class CategoryService {
                 .orElseThrow(() -> new RuntimeException("Category not found or not accessible"));
         existingCategory.setName(dto.getName());
         existingCategory.setIcon(dto.getIcon());
+        existingCategory.setType(dto.getType());
         existingCategory = categoryRepository.save(existingCategory);
         return toDTO(existingCategory);
     }
