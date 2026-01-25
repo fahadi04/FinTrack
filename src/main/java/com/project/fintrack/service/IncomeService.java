@@ -11,6 +11,7 @@ import com.project.fintrack.repository.IncomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class IncomeService {
         return list.stream().map(this::toDTO).toList();
     }
 
-    //Delete income  by id
+    //Delete income by id
     public void deleteIncome(Long incomeId) {
         ProfileModal profile = profileService.getCurrentProfile();
         IncomeModal modal = incomeRepository.findById(incomeId)
@@ -50,6 +51,20 @@ public class IncomeService {
             throw new RuntimeException("Unauthorized to delete this income");
         }
         incomeRepository.deleteById(incomeId);
+    }
+
+    //Get 5 latest incomes for the current user
+    public List<IncomeDTO> getLatest5IncomeForCurrentUser() {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        List<IncomeModal> list = incomeRepository.findTop5ByProfileIdOrderByDateDesc(currentProfile.getId());
+        return list.stream().map(this::toDTO).toList();
+    }
+
+    //Get total incomes for the current user
+    public BigDecimal getTotalIncomeForCurrentUser() {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        BigDecimal totalIncomeByProfileId = incomeRepository.findTotalIncomeByProfileId(currentProfile.getId());
+        return totalIncomeByProfileId != null ? totalIncomeByProfileId : BigDecimal.ZERO;
     }
 
     //helper methods
