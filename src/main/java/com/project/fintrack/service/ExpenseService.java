@@ -7,6 +7,8 @@ import com.project.fintrack.modal.ProfileModal;
 import com.project.fintrack.repository.CategoryRepository;
 import com.project.fintrack.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.math3.analysis.function.Exp;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -65,6 +67,20 @@ public class ExpenseService {
         ProfileModal currentProfile = profileService.getCurrentProfile();
         BigDecimal totalExpenseByProfileId = expenseRepository.findTotalExpenseByProfileId(currentProfile.getId());
         return totalExpenseByProfileId != null ? totalExpenseByProfileId : BigDecimal.ZERO;
+    }
+
+    //filter expenses
+    public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        List<ExpenseModal> list = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(currentProfile.getId(),
+                startDate, endDate, keyword, sort);
+        return list.stream().map(this::toDTO).toList();
+    }
+
+    //Notifications
+    public List<ExpenseDTO> getExpensesForUserOnDate(Long profileId, LocalDate date) {
+        List<ExpenseModal> list = expenseRepository.findByProfileIdAndDate(profileId, date);
+        return list.stream().map(this::toDTO).toList();
     }
 
     //helper methods

@@ -9,6 +9,7 @@ import com.project.fintrack.modal.ProfileModal;
 import com.project.fintrack.repository.CategoryRepository;
 import com.project.fintrack.repository.IncomeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -65,6 +66,14 @@ public class IncomeService {
         ProfileModal currentProfile = profileService.getCurrentProfile();
         BigDecimal totalIncomeByProfileId = incomeRepository.findTotalIncomeByProfileId(currentProfile.getId());
         return totalIncomeByProfileId != null ? totalIncomeByProfileId : BigDecimal.ZERO;
+    }
+
+    //filter incomes
+    public List<IncomeDTO> filterIncomes(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        List<IncomeModal> list = incomeRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(currentProfile.getId(),
+                startDate, endDate, keyword, sort);
+        return list.stream().map(this::toDTO).toList();
     }
 
     //helper methods
