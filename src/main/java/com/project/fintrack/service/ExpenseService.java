@@ -9,6 +9,7 @@ import com.project.fintrack.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,6 +51,20 @@ public class ExpenseService {
         }
         expenseRepository.delete(modal);
 
+    }
+
+    //Get latest 5 expenses
+    public List<ExpenseDTO> getLatest5ExpensesForCurrentUser() {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        List<ExpenseModal> list = expenseRepository.findTop5ByProfileIdOrderByDateDesc(currentProfile.getId());
+        return list.stream().map(this::toDTO).toList();
+    }
+
+    //Get total expenses of current user
+    public BigDecimal getTotalExpensesForCurrentUser() {
+        ProfileModal currentProfile = profileService.getCurrentProfile();
+        BigDecimal totalExpenseByProfileId = expenseRepository.findTotalExpenseByProfileId(currentProfile.getId());
+        return totalExpenseByProfileId != null ? totalExpenseByProfileId : BigDecimal.ZERO;
     }
 
     //helper methods
