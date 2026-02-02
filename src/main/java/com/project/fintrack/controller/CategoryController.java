@@ -39,4 +39,9 @@ public class CategoryController {
         CategoryDTO updateCategory = categoryService.updateCategory(categoryId, categoryDTO);
         return ResponseEntity.ok(updateCategory);
     }
+
+    @DeleteMapping("/{categoryId}")
+    public void deleteCategory(){
+
+    }
 }
