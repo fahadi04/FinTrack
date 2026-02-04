@@ -3,7 +3,6 @@ import EmojiPickerPopup from "./EmojiPickerPopup";
 import Input from "./Input";
 
 const AddExpenseForm = ({ onAddExpense, categories }) => {
-  console.log("Categories in AddExpenseForm:", categories);
 
   const [expense, setExpense] = useState({
     name: "",

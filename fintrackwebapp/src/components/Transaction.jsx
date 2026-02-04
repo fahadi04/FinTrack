@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import TransactionInfoCard from "../components/TransactionInfoCard";
+import TransactionsInfoCard from "../components/TransactionsInfoCard";
 import moment from "moment";
 
 const Transactions = ({ transaction, onMore, type, title }) => {
@@ -17,7 +17,7 @@ const Transactions = ({ transaction, onMore, type, title }) => {
 
             <div className="mt-6">
                 {transaction?.slice(0, 5)?.map((item) => (
-                    <TransactionInfoCard
+                    <TransactionsInfoCard
                         key={item.id}
                         title={item.name}
                         icon={item.icon}

@@ -2,8 +2,8 @@ import { Search } from "lucide-react";
 import Dashboard from "../components/Dashboard";
 import { useUser } from "../hooks/useUser";
 import { useState } from "react";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
 import TransactionsInfoCard from "../components/TransactionsInfoCard";
 import moment from "moment";
@@ -33,12 +33,11 @@ const Filter = () => {
         sortField,
         sortOrder,
       });
-      console.log("transaction", response.data);
       setTransactions(response.data);
     } catch (error) {
-      console.error("fsiled to fetch transaction", error);
+      console.error("failed to fetch transaction", error);
       toast.error(
-        error.message || "Failed to fetch transaction. Please try again"
+        error.message?.response?.data || "Failed to fetch transaction. Please try again"
       );
     } finally {
       setLoading(false);
@@ -173,11 +172,15 @@ const Filter = () => {
           </div>
           {transactions.length === 0 && !loading ? (
             <p className="text-gray-500">
-              Search the filtera and click apply to filter the transaction
+              Select the filters and apply to filter the transactions
             </p>
-          ) : (
-            ""
-          )}
+          ) : ""}
+          {
+            loading ? (
+              <p className="text-gray-500" >
+                Loading Transactions</p>
+            ) : ("")}
+
           {transactions.map((transaction) => (
             <TransactionsInfoCard
               key={transaction.id}
@@ -191,7 +194,7 @@ const Filter = () => {
           ))}
         </div>
       </div>
-    </Dashboard>
+    </Dashboard >
   );
 };
 

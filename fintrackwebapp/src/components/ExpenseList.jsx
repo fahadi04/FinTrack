@@ -1,10 +1,9 @@
-import { Download, Mail } from "lucide-react";
+import { Download, LoaderCircle, Mail } from "lucide-react";
 import TransactionsInfoCard from "./TransactionsInfoCard";
 import moment from "moment";
 import { useState } from "react";
 
 const ExpenseList = ({ transactions, onDelete, onDownload, onEmail }) => {
-  console.log("Transactions in UI:", transactions);
 
   const [emailLoading, setEmailLoading] = useState(false);
   const [downloadLoading, setDownloadLoading] = useState(false);
@@ -38,7 +37,11 @@ const ExpenseList = ({ transactions, onDelete, onDownload, onEmail }) => {
             className="px-3 py-1 rounded-xl bg-blue-500 text-white flex items-center gap-1 hover:bg-blue-600 cursor-pointer"
           >
             {emailLoading ? (
-              "Emailing..."
+              <>
+                <LoaderCircle className="w-4 h-4 animate-spin" />
+                "Emailing..."
+              </>
+
             ) : (
               <>
                 <Mail size={15} /> Email
@@ -51,7 +54,12 @@ const ExpenseList = ({ transactions, onDelete, onDownload, onEmail }) => {
             className="px-3 py-1 rounded-xl bg-green-500 text-white flex items-center gap-1 hover:bg-green-600 cursor-pointer"
           >
             {downloadLoading ? (
-              "Downloading..."
+
+              <>
+                <LoaderCircle className="w-4 h-4 animate-spin" />
+                "Downloading..."
+
+              </>
             ) : (
               <>
                 <Download size={15} /> Download

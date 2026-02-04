@@ -1,4 +1,4 @@
-export const addThousandSeparator = (num) => {
+export const addThousandsSeparator = (num) => {
   if (num == null || isNaN(num)) return "";
 
   //Convert number to string to handle decimal
@@ -31,11 +31,11 @@ export const addThousandSeparator = (num) => {
 };
 
 // Convert income list into line chart data
-export const prepareIncomeLineChartData = (incomes = []) => {
-  return incomes.map((item) => ({
-    date: new Date(item.date || item.createdAt).toLocaleString("default", {
-      month: "short",
-    }),
-    amount: Number(item.amount) || 0,
-  }));
-};
+// export const prepareIncomeLineChartData = (incomes = []) => {
+//   return incomes.map((item) => ({
+//     date: new Date(item.date || item.createdAt).toLocaleString("default", {
+//       month: "short",
+//     }),
+//     amount: Number(item.amount) || 0,
+//   }));
+// };

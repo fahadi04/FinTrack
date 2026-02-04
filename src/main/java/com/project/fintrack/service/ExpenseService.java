@@ -1,13 +1,13 @@
 package com.project.fintrack.service;
 
 import com.project.fintrack.dto.ExpenseDTO;
+import com.project.fintrack.dto.IncomeDTO;
 import com.project.fintrack.modal.CategoryModal;
 import com.project.fintrack.modal.ExpenseModal;
 import com.project.fintrack.modal.ProfileModal;
 import com.project.fintrack.repository.CategoryRepository;
 import com.project.fintrack.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.math3.analysis.function.Exp;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 

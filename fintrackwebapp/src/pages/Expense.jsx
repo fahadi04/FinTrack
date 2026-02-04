@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Dashboard from "../components/Dashboard";
 import { useUser } from "../hooks/useUser";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
 import ExpenseList from "../components/ExpenseList";
 import Modal from "../components/Modal";
 import { Plus } from "lucide-react";
 import AddExpenseForm from "../components/AddExpenseForm";
 import DeleteAlert from "../components/DeleteAlert";
+import ExpenseOverview from "../components/ExpenseOverview";
 
 const Expense = () => {
   useUser();
@@ -29,11 +30,9 @@ const Expense = () => {
     try {
       const response = await axiosConfig.get(API_ENDPOINTS.GET_ALL_EXPENSES);
       if (response.status === 200) {
-        console.log(response.data);
         setExpenseData(response.data);
       }
     } catch (error) {
-      console.error("Failed to fetch expense details", error);
       toast.error(
         error.response?.data?.message || "Failed while fetching expenses"
       );
@@ -51,7 +50,6 @@ const Expense = () => {
         setCategories(response.data);
       }
     } catch (error) {
-      console.log("Failed to fetch expense category", error);
       toast.error(error.data?.message || "Failed to fetch expense category");
     }
   };
@@ -85,7 +83,7 @@ const Expense = () => {
     }
 
     try {
-      const response = await axiosConfig.post(API_ENDPOINTS.ADD_EXPENSE, {
+      const response = await axiosConfig.post(API_ENDPOINTS.ADD_EXPENSES, {
         name,
         amount: Number(amount),
         date,
@@ -100,7 +98,6 @@ const Expense = () => {
         fetchExpenseCategory();
       }
     } catch (error) {
-      console.log("Error while adding expense", error);
       toast.error(error.response?.data?.message || "Failed to add expense");
     }
   };
@@ -112,7 +109,6 @@ const Expense = () => {
       toast.success("Expense deleted successfully");
       fetchExpenseDetails();
     } catch (error) {
-      console.log("Error deleting expense", error);
       toast.error(error.response?.data?.message || "Failed to delete expense");
     }
   };
@@ -134,7 +130,6 @@ const Expense = () => {
       window.URL.revokeObjectURL(url);
       toast.success("Download expense details successfully");
     } catch (error) {
-      console.error("Error downloading expense details", error);
       toast.error(
         error.response?.data?.message || "Failed to download expense"
       );
@@ -148,7 +143,6 @@ const Expense = () => {
         toast.success("Expense details mailed successfully");
       }
     } catch (error) {
-      console.error("Error emailing expense details", error);
       toast.error(error.response?.data?.message || "Failed to email expense");
     }
   };
@@ -163,6 +157,8 @@ const Expense = () => {
       <div className="my-5 mx-auto">
         <div className="grid grid-cols-1 gap-6">
           <div>
+            {/* Expense Overview */}
+            <ExpenseOverview transactions={expenseData} />
             <button
               className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
               onClick={() => setOpenAddExpenseModal(true)}

@@ -1,11 +1,11 @@
 import { use, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { validateEmail } from "../util/Validation";
 import Input from "../components/Input";
 import { AppContext } from "../context/AppContext";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import { LoaderCircle } from "lucide-react";
+import isValidEmail from "../utils/validation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       setError("Please enter a valid email address");
       setIsLoading(false);
       return;
@@ -96,7 +96,10 @@ const Login = () => {
               className="w-full py-3 text-lg font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
               type="submit"
             >
-              {isLoading ? <>Logging in...</> : "LOGIN"}
+              {isLoading ? <>
+                <LoaderCircle className="w-4 h-4 animate-spin" />
+                Logging in...
+              </> : "LOGIN"}
             </button>
             <p className="text-sm text-slate-800 text-center mt-6">
               Don’t have an account?{" "}

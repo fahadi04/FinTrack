@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
-import axiosConfig from "../util/AxiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
+import axiosConfig from "../utils/axiosConfig";
 
 export const useUser = () => {
   const { user, setUser, clearUser } = useContext(AppContext);
@@ -23,7 +23,6 @@ export const useUser = () => {
           setUser(response.data);
         }
       } catch (error) {
-        console.log("Failed to fetch user info", error);
         if (isMounted) {
           clearUser();
           navigate("/login");

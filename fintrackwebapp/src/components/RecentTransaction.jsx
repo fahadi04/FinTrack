@@ -8,6 +8,9 @@ const RecentTransaction = ({ transactions, onMore }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h4 className="text-lg font-semibold">Recent Transaction</h4>
+        <button className="card-btn" onClick={onMore}>
+          More <ArrowRight className="text-base" size={15} />
+        </button>
       </div>
 
       {/* Transactions */}

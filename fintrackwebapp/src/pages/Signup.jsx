@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
-import { validateEmail } from "../util/Validation";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import isValidEmail from "../utils/validation";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
 import ProfilePhotoSelector from "../components/ProfilePhotoSelector";
-import uploadProfileImage from "../util/UploadProfileImage";
+import uploadProfileImage from "../utils/UploadProfileImage";
+import { LoaderCircle } from "lucide-react";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -29,7 +30,7 @@ const Signup = () => {
       return;
     }
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       setError("Please enter a valid email address");
       setIsLoading(false);
       return;
@@ -61,8 +62,6 @@ const Signup = () => {
         navigate("/login");
       }
     } catch (err) {
-      console.log(err);
-
       if (err.response) {
         if (err.response.status === 403) {
           toast.error("Email already registered");
@@ -135,7 +134,12 @@ const Signup = () => {
               className="w-full py-3 text-lg font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
               type="submit"
             >
-              {isLoading ? <>Signing Up</> : "SIGN UP"}
+              {isLoading ? <>
+
+                <LoaderCircle className="w-4 h-4 animate-spin" />
+                Signing Up
+
+              </> : "SIGN UP"}
             </button>
             <p className="text-sm text-slate-800 text-center mt-6">
               Already have an account?

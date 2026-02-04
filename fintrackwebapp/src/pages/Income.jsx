@@ -1,14 +1,15 @@
-  import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "../components/Dashboard";
 import { useUser } from "../hooks/useUser";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
 import IncomeList from "../components/IncomeList";
 import Modal from "../components/Modal";
 import { Plus } from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm";
 import DeleteAlert from "../components/DeleteAlert";
+import IncomeOverview from "../components/IncomeOverview";
 
 const Income = () => {
   useUser();
@@ -35,7 +36,6 @@ const Income = () => {
         setIncomeData(response.data);
       }
     } catch (error) {
-      console.error("Failed to fetch income detailes", error);
       toast.error(
         error.response?.data?.message || "failed while feacting income"
       );
@@ -53,7 +53,6 @@ const Income = () => {
         setCategories(response.data);
       }
     } catch (error) {
-      console.log("Failed to fetch income category", error);
       toast.error(error.data?.message || "Failed to fetch income");
     }
   };
@@ -102,7 +101,6 @@ const Income = () => {
         fetchIncomeCategory();
       }
     } catch (error) {
-      console.log("Getting error while adding income", error);
       toast.error(error.response?.data?.message || "Failed to adding income");
     }
   };
@@ -114,7 +112,6 @@ const Income = () => {
       toast.success("Income Deleted successfully");
       fetchIncomeDetails();
     } catch (error) {
-      console.log("Error deleting income", error);
       toast.error(error.response?.data?.message || "Failed to delete income");
     }
   };
@@ -136,7 +133,6 @@ const Income = () => {
       window.URL.revokeObjectURL(url);
       toast.success("Download income details successfully");
     } catch (error) {
-      console.error("Error downloading income details", error);
       toast.error(error.response?.data?.message || "Failed to download income");
     }
   };
@@ -145,10 +141,9 @@ const Income = () => {
     try {
       const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_INCOME);
       if (response.status === 200) {
-        toast.success("Income details mailed successfully");
+        toast.success("Income details emailed successfully");
       }
     } catch (error) {
-      console.error("getting error while emailing income details", error);
       toast.error(error.response?.data?.message || "Failed to email income");
     }
   };
@@ -164,6 +159,7 @@ const Income = () => {
         <div className="grid grid-cols-1 gap-6">
           <div>
             {/*overview for incomewith line car */}
+            <IncomeOverview incomes={incomeData} />
             <button
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
               onClick={() => setOpenAddIncomeModal(true)}

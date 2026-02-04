@@ -3,8 +3,8 @@ import Dashboard from "../components/Dashboard";
 import { useUser } from "../hooks/useUser";
 import CategoryList from "../components/CategoryList";
 import { useEffect, useState } from "react";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
 import Modal from "../components/Modal";
 import AddCatrgoryForm from "../components/AddCategoryForm";
@@ -27,12 +27,10 @@ const Category = () => {
     try {
       const response = await axiosConfig.get(API_ENDPOINTS.GET_ALL_CATEGORIES);
       if (response.status === 200) {
-        console.log("categories", response.data);
         setCategoryData(response.data);
       }
     } catch (error) {
-      console.log("Somethings went wrong. Please try again");
-      toast.error(error.message);
+      toast.error(error.message?.response?.data || "Failed to add the category");
     } finally {
       setLoding(false);
     }
@@ -72,7 +70,6 @@ const Category = () => {
         fetchCategoryDetails();
       }
     } catch (error) {
-      console.log("Error while adding category", error);
       toast.error(error.response?.data?.message || "Failed to add actegory");
     }
   };
@@ -106,10 +103,6 @@ const Category = () => {
       toast.success("Category Updated successfully");
       fetchCategoryDetails();
     } catch (error) {
-      console.log(
-        "Getting error while updating category",
-        error.response?.data?.message || error.message
-      );
       toast.error(error.response?.data?.message || "Failed to update category");
     }
   };

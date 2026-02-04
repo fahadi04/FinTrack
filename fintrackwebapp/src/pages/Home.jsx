@@ -2,14 +2,15 @@ import { Coins, Wallet, WalletCards } from "lucide-react";
 import Dashboard from "../components/Dashboard";
 import InfoCard from "../components/InfoCard";
 import { useUser } from "../hooks/useUser";
-import { addThousandsSeperator } from "../util/util";
+import { addThousandsSeparator } from "../utils/util";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axiosConfig from "../util/AxiosConfig";
-import { API_ENDPOINTS } from "../util/apiEnpoints";
+import axiosConfig from "../utils/axiosConfig";
+import { API_ENDPOINTS } from "../utils/apiEndpoints";
 import toast from "react-hot-toast";
-import RecenetTransaction from "../components/RecentTransaction";
+import RecentTransaction from "../components/RecentTransaction";
 import Transactions from "../components/Transactions";
+import FinanceOverview from "../components/FinanceOverview";
 
 const Home = () => {
   useUser();
@@ -20,7 +21,7 @@ const Home = () => {
 
   const fetchDashboardData = async () => {
     if (loading) {
-      return;
+      return; a
     }
 
     try {
@@ -41,7 +42,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchDashboardData();
-    return () => {};
+    return () => { };
   }, []);
 
   return (
@@ -53,29 +54,38 @@ const Home = () => {
             <InfoCard
               icon={<WalletCards />}
               label="Total Balance"
-              value={addThousandsSeperator(dashboardData?.totalBalance || 0)}
+              value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
               color="bg-purple-800"
             />
             <InfoCard
               icon={<Wallet />}
               label="Total Income"
-              value={addThousandsSeperator(dashboardData?.totalIncome || 0)}
+              value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
               color="bg-green-800"
             />
             <InfoCard
               icon={<Coins />}
               label="Total Expense"
-              value={addThousandsSeperator(dashboardData?.totalExpense || 0)}
+              value={addThousandsSeparator(dashboardData?.totalExpense || 0)}
               color="bg-red-800"
             />
           </div>
-          <div className="grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             {/*Recent Transaction */}
-            <RecenetTransaction
+            <RecentTransaction
               transactions={dashboardData?.recentTransaction}
+            />
+
+            {/* Finance Overview */}
+            <FinanceOverview
+              totalBalance={dashboardData?.totalBalance || 0}
+              totalIncome={dashboardData?.totalIncome || 0}
+              totalExpense={dashboardData?.totalExpense || 0}
+
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+
             {/*Expense transaction */}
             <Transactions
               transactions={dashboardData?.recent5Expense || []}

@@ -4,7 +4,7 @@ import {
   TrendingUp,
   UtensilsCrossed,
 } from "lucide-react";
-import { addThousandsSeperator } from "../util/util";
+import { addThousandsSeparator } from "../utils/util";
 
 const TransactionsInfoCard = ({
   icon,
@@ -46,7 +46,7 @@ const TransactionsInfoCard = ({
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}
           >
             <h6 className="text-xs font-medium">
-              {type === "income" ? "+" : "-"} ${addThousandsSeperator(amount)}
+              {type === "income" ? "+" : "-"} ${addThousandsSeparator(amount)}
             </h6>
             {type === "income" ? (
               <TrendingUp size={15} />
