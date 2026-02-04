@@ -1,44 +1,100 @@
-# FinTrack 💰
+# 💰 FinTrack – Personal Finance Tracker
 
-FinTrack is a modern and easy-to-use money management application that helps users track income, expenses, savings, and budgets efficiently.
+FinTrack is a full-stack personal finance tracking application that helps users manage **expenses and income**, categorize transactions, and track spending efficiently.
+
+Built with **React + Tailwind CSS** on the frontend and **Spring Boot + MySQL** on the backend.
+
+---
 
 ## 🚀 Features
 
-- Add and manage income & expenses
-- Category-wise expense tracking
-- Monthly and yearly financial reports
-- Budget planning and alerts
-- Secure user authentication
-- Clean and simple dashboard
-- Export data (PDF / Excel - future scope)
+### ✅ Authentication
+- User registration & login
+- Secure JWT-based authentication
+- Protected routes
 
-## 🛠 Tech Stack
+### ✅ Expense Management
+- Add, view, and delete expenses
+- Assign emoji icons to expenses
+- Categorize expenses (Food, Rent, Travel, etc.)
+- Date-based expense tracking
 
-- Backend: Spring Boot
-- Database: PostgreSQL/MySQL
-- Frontend: React 
-- Authentication: JWT
-- API Documentation: Swagger
+### ✅ Income Management
+- Add and view income records
+- Income categories (Salary, Bonus, Freelance, etc.)
 
-## 📊 Use Case
+### ✅ Categories
+- Separate **Income** and **Expense** categories
+- Dynamic category dropdown based on transaction type
 
-FinTrack is ideal for:
-- Individuals managing daily expenses
-- Students tracking pocket money
-- Professionals planning monthly budgets
-- Anyone who wants to save and analyze spending
+### ✅ Dashboard
+- Overview of total income and expenses
+- Recent transactions display
 
-## 🎯 Future Enhancements
+---
 
-- Mobile App (Android / iOS)
-- Bank API integration
-- Expense prediction using AI
-- Cloud backup & sync
+## 🛠️ Tech Stack
+
+### Frontend
+- React
+- Tailwind CSS
+- Axios
+- Moment.js
+- Lucide Icons
+- Emoji Picker
+
+### Backend
+- Spring Boot
+- Spring Security
+- JWT Authentication
+- JPA / Hibernate
+- MySQL
+
+---
 
 ## 📂 Project Structure
 
-fintrack
-├── backend
-├── frontend
-├── docs
-└── README.md
+### Frontend
+
+src/
+├── components/
+│ ├── AddExpenseForm.jsx
+│ ├── TransactionsInfoCard.jsx
+│ ├── Input.jsx
+│ └── EmojiPickerPopup.jsx
+├── pages/
+│ ├── Dashboard.jsx
+│ ├── Expenses.jsx
+│ └── Income.jsx
+├── hooks/
+├── util/
+└── App.jsx
+
+### Backend
+
+src/main/java/com/project/fintrack
+├── controller/
+├── service/
+├── repository/
+├── dto/
+├── entity/
+├── security/
+└── utils/
+
+
+## ⚙️ Setup & Installation
+
+### 🔹 Backend Setup
+
+1. Clone the repository
+git clone https://github.com/your-username/fintrack.git
+
+2.Configure MySQL in application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/fintrack
+spring.datasource.username=root
+spring.datasource.password=your_password
+
+3.Run the Spring Boot application
+mvn spring-boot:run
+
+
